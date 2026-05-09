@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momentum'26 | Beyond Branch. Beyond Degree. Beyond Code.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           ROOT VARIABLES & DESIGN SYSTEM
+        ========================================= */
+        :root {
+            /* Brand Colors */
+            --brand-blue: #34c3e8;
+            --brand-red: #e21e38;
+            --brand-yellow: #ffc10e;
+            --dark-bg: #0d0d21;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-red) 68%, var(--brand-yellow) 100%);
+            
+            /* UI Colors */
+            --bg-light: #fafafa;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-light: #f8fafc;
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            
+            --glass-dark-bg: rgba(255, 255, 255, 0.05);
+            --glass-dark-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* =========================================
+           RESET & BASE
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            /* Updated Font */
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+        
+        img, video { max-width: 100%; height: auto; display: block; }
+
+        /* =========================================
+           LAYOUT & SPACING
+        ========================================= */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            position: relative;
+            padding: 60px 0px; 
+        }
+
+        .dark-section {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        /* Grid Utilities */
+        .grid { display: grid; gap: 24px; }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+        @media (max-width: 1024px) {
+            .lg-grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-cols-4, .grid-cols-5 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .grid-cols-2, .grid-cols-3, .lg-grid-cols-2, .grid-cols-4, .grid-cols-5 { grid-template-columns: 1fr; }
+        }
+
+        /* Flex Utilities */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 8px; }
+        .gap-4 { gap: 16px; }
+        .gap-6 { gap: 24px; }
+        
+        @media (min-width: 768px) {
+            .md-flex-row { flex-direction: row; }
+        }
+
+        /* =========================================
+           TYPOGRAPHY UTILITIES
+        ========================================= */
+        .text-center { text-align: center; }
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-7xl { font-size: 4.5rem; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .uppercase { text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        @media (min-width: 768px) { .text-7xl { font-size: 6rem; } }
+        @media (min-width: 1024px) { .text-7xl { font-size: 8rem; } }
+
+        /* =========================================
+           HEADER & NAVIGATION
+        ========================================= */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(13, 13, 33, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .site-header.scrolled {
+            background: rgba(13, 13, 33, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 12px 0;
+            border-bottom-color: rgba(52, 195, 232, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo img {
+            height: 36px;
+            transition: transform 0.3s ease;
+        }
+        
+        .brand-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:not(.btn):hover {
+            color: var(--brand-blue);
+        }
+        
+        .nav-links a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:not(.btn):hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            color: #fff;
+            font-size: 24px;
+            background: none;
+        }
+
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+        }
+
+        /* =========================================
+           GLASS COMPONENTS
+        ========================================= */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #ffffff;
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px 0 rgba(52, 195, 232, 0.15);
+            border-color: rgba(52, 195, 232, 0.5);
+        }
+
+        .dark-section .glass-card {
+            background: var(--glass-dark-bg);
+            border-color: var(--glass-dark-border);
+            color: var(--text-light);
+        }
+        
+        .dark-section .glass-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--brand-blue);
+        }
+
+        /* =========================================
+           BUTTONS & BADGES
+        ========================================= */
+        .btn, .btn-submit {
+            position: relative;
+            z-index: 1;
+            border: none !important; /* Managed by gradient border */
+        }
+
+        /* Gradient Border Setup for ALL CTAs */
+        .btn::after, .btn-submit::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px; /* Gradient border thickness */
+            background: var(--gradient-primary);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--text-main);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-primary);
+            box-shadow: 0 0 20px rgba(52, 195, 232, 0.4);
+            color: #fff;
+        }
+        
+        /* Make ::after transparent on hover if primary is fully filled */
+        .btn-primary:hover::after {
+            opacity: 0;
+        }
+
+        .btn-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            color: var(--text-main);
+        }
+
+        .btn-glass:hover {
+            background: #fff;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .dark-section .btn-outline {
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            background: rgba(52, 195, 232, 0.05);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* =========================================
+           HERO SECTION
+        ========================================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 0;
+            background: #000;
+        }
+
+        /* CSS trick to make iframe cover the background */
+        .hero-video-wrapper {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 aspect ratio */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 16:9 aspect ratio */
+            transform: translate(-50%, -50%);
+            border: none;
+            pointer-events: none; /* Prevents interaction with YT play button */
+        }
+
+        .hero-overlays {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-overlay-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.6));
+        }
+
+        /* =========================================
+           ABOUT SECTION
+        ========================================= */
+        .about-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+        @media (min-width: 1024px) {
+            .about-grid { flex-direction: row; }
+            .about-title { width: 33.333%; position: sticky; top: 120px; align-self: flex-start; }
+            .about-content { width: 66.666%; }
+        }
+        
+        .prose p { margin-bottom: 2rem; font-size: 1.125rem; color: var(--text-muted); font-weight: 500;}
+        .prose .highlight-box {
+            border-left: 4px solid var(--brand-blue);
+            margin: 2rem 0;
+        }
+        .prose .glass-box {
+            text-align: center;
+            padding: 40px;
+            border-radius: 24px;
+            margin: 3rem 0;
+            box-shadow: var(--glass-shadow);
+        }
+        .prose ul li { margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+        .bullet { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue); }
+
+        /* =========================================
+           TIMELINE (AGENDA) - IMPROVED DOTS
+        ========================================= */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 0 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-wrapper { margin: 0 auto; }
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 7px;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            border: 3px solid var(--brand-blue);
+            box-shadow: 0 0 15px rgba(52, 195, 232, 0.3);
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--brand-blue);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.15);
+            box-shadow: 0 0 25px rgba(52, 195, 232, 0.6);
+            border-width: 4px;
+        }
+
+        .timeline-card {
+            width: 100%;
+        }
+
+        .timeline-card.break {
+            background: transparent;
+            border: 2px dashed #e2e8f0;
+            box-shadow: none;
+            text-align: center;
+            padding: 16px;
+        }
+
+        .timeline-time {
+            color: var(--brand-blue);
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .timeline-card.finale {
+            border: 1px solid var(--brand-yellow);
+            box-shadow: 0 0 20px rgba(255, 193, 14, 0.15);
+        }
+
+        .timeline-card.dark {
+            background: var(--dark-bg);
+            color: #fff;
+        }
+        
+        .dot-break {
+            border-color: #cbd5e1 !important;
+            background: #f8fafc !important;
+            box-shadow: none !important;
+        }
+        .dot-break::before { background: #cbd5e1 !important; }
+        
+        .dot-red { border-color: var(--brand-red) !important; }
+        .dot-red::before { background: var(--brand-red) !important; }
+        .timeline-item:hover .dot-red { box-shadow: 0 0 25px rgba(226, 30, 56, 0.6) !important; }
+        
+        .dot-yellow { border-color: var(--brand-yellow) !important; }
+        .dot-yellow::before { background: var(--brand-yellow) !important; }
+        .timeline-item:hover .dot-yellow { box-shadow: 0 0 25px rgba(255, 193, 14, 0.6) !important; }
+
+        .dot-dark { border-color: var(--dark-bg) !important; }
+        .dot-dark::before { background: var(--dark-bg) !important; }
+
+        /* =========================================
+           HACKVEGA & REPORT SECTION
+        ========================================= */
+        .premium-border-card {
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+                        var(--gradient-primary) border-box;
+            border: 2px solid transparent;
+            border-radius: 32px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .code-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.2;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--brand-blue);
+            padding: 20px;
+            line-height: 1.8;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .premium-border-card:hover .code-bg { opacity: 0.4; }
+
+        .report-animation-bars {
+            width: 100%;
+            height: 160px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: rotate(2deg);
+            transition: transform 0.5s ease;
+        }
+
+        .report-card:hover .report-animation-bars { transform: rotate(0deg); }
+
+        /* =========================================
+           MARQUEE PARTNERS
+        ========================================= */
+        .marquee-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 24px 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .marquee-track.reverse {
+            animation-direction: reverse;
+            animation-duration: 40s;
+        }
+
+        .marquee-track img {
+            height: 48px;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .marquee-track img:hover { opacity: 1; }
+
+        /* =========================================
+           FORM ELEMENTS
+        ========================================= */
+        .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding: 12px 0;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .input-field:focus {
+            border-bottom-color: var(--brand-blue);
+        }
+
+        .input-label {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            transform: translateY(-20px) scale(0.85);
+            color: var(--brand-blue);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #fff;
+            color: var(--dark-bg);
+            border-radius: 12px;
+            font-weight: 700;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(52, 195, 232, 0.4);
+        }
+        
+        .btn-submit:hover::after {
+            opacity: 0;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        .site-footer {
+            background-color: var(--dark-bg);
+            color: #fff;
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+        
+        .footer-logo {
+            height: 48px;
+            margin-bottom: 24px;
+        }
+        
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            max-width: 400px;
+            line-height: 1.8;
+        }
+        
+        .footer-title {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+            color: var(--brand-blue);
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--brand-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* =========================================
+           ANIMATIONS & UTILS
+        ========================================= */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(52,195,232,0.15) 0%, rgba(226,30,56,0.05) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Hide scrollbar for lenis */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+        
+        /* Helper Spacing */
+        .mb-2 { margin-bottom: 8px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mb-12 { margin-bottom: 48px; }
+        .mb-16 { margin-bottom: 64px; }
+        .mt-8 { margin-top: 32px; }
+        .py-4 { padding-top: 16px; padding-bottom: 16px; }
+        .w-full { width: 100%; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        
+    </style>
+</head>
+<body>
+
+    <div class="noise-bg"></div>
+    <div id="cursor-glow"></div>
+
+    <header class="site-header" id="header">
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">
+                <img src="https://hirepro.in/wp-content/uploads/2026/02/HirePro_Logo.svg" alt="HirePro Logo">
+            </a>
+            <button class="mobile-menu-btn">☰</button>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#legacy">Legacy</a>
+                <a href="#topics">Topics</a>
+                <a href="#agenda">Agenda</a>
+                <a href="#speakers">Speakers</a>
+                <a href="#register" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.875rem;">Register Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-video-wrapper">
+            <iframe class="hero-video-bg" 
+                src="https://www.youtube.com/embed/BvgbBRej_II?autoplay=1&mute=1&controls=0&loop=1&playlist=BvgbBRej_II&start=22&playsinline=1&rel=0&showinfo=0&disablekb=1&modestbranding=1&iv_load_policy=3" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <div class="hero-overlays">
+            <div class="hero-overlay-gradient"></div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container about-grid">
+            <div class="about-title reveal">
+                <h2 class="font-display text-5xl font-bold">About<br><span class="text-gradient">Momentum’26</span></h2>
+            </div>
+            <div class="about-content prose">
+                <p class="text-2xl font-display reveal" style="color: var(--text-main); font-weight: 600;">Momentum began as a radical idea. Two years ago, 400+ visionaries from academia and industry convened around a shared conviction, that the long-standing compact between them was ready to be reimagined.</p>
+                <p class="reveal">By 2025, the idea had become a reckoning. More voices joined. Global uncertainty was no longer a subject of considered debate. It had become the very atmosphere in which institutions and organizations functioned.</p>
+                <div class="glass-card highlight-box reveal">
+                    <p class="text-xl m-0" style="color: var(--text-main); margin: 0;">Now in 2026, the reckoning has a shape.</p>
+                </div>
+                <p class="reveal">IT intake stands at a two-decade nadir. Yet AI-linked hiring has surged 41% in BFSI, 38% in Healthcare, 31% in Retail, and 30% in Logistics. The opportunities have not contracted; they have migrated, and in migrating, they have transformed.</p>
+                <p class="reveal">Companies are recruiting for the valuable ability to deploy intelligence purposefully alongside AI, and evaluating for it in ways that bear little resemblance to what came before. The branch-to-career pipeline that entire generations architected their futures around is being redrawn irreversibly.</p>
+                
+                <div class="glass glass-box reveal">
+                    <p class="mb-4" style="font-weight: 600;">Momentum’26 convenes at the center of this transformation, a one-day symposium with a provocation as its compass:</p>
+                    <h3 class="font-display text-3xl font-bold text-gradient">“Beyond Branch. Beyond Degree. Beyond Code.”</h3>
+                </div>
+                
+                <p class="reveal">In an age of AI, the boundaries that once defined who could learn what, and who could work where, are dissolving.</p>
+                <p class="font-bold reveal" style="color: var(--text-main);">What emerges in their place is both a challenge and an invitation:</p>
+                <ul class="reveal">
+                    <li><div class="bullet"></div> to reimagine learning,</li>
+                    <li><div class="bullet"></div> to redefine employability,</li>
+                    <li><div class="bullet"></div> and to forge the kind of academia–industry partnership genuinely worthy of this moment.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="legacy" style="background: var(--bg-light); overflow: hidden;">
+        <div class="container text-center">
+            <div class="mb-16 reveal">
+                <h2 class="font-display text-4xl font-bold mb-4">The legacy of Momentum</h2>
+                <p class="text-lg" style="color: var(--text-muted);">Past edition highlights</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-6 mb-16">
+                <div class="glass-card text-center reveal">
+                    <div class="text-4xl font-display font-bold mb-2 counter" style="color: var(--brand-blue);" data-target="900">0</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">+ changemakers in one room</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-4xl font-display font-bold mb-2 counter" style="color: var(--brand-blue);" data-target="50">0</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">+ speakers from industry/academia</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-4xl font-display font-bold mb-2 counter" style="color: var(--brand-red);" data-target="450">0</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">+ corporates in attendance</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-4xl font-display font-bold mb-2 counter" style="color: var(--brand-red);" data-target="450">0</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">+ academic institutions engaged</div>
+                </div>
+                
+                <div class="glass-card text-center reveal">
+                    <div class="text-3xl font-display font-bold mb-2" style="color: var(--text-main);">7</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">marquee panel discussions</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-3xl font-display font-bold mb-2" style="color: var(--text-main);">16+</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">hours of industry dialogue</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-3xl font-display font-bold mb-2" style="color: var(--text-main);">3</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">thought-provoking fireside chats</div>
+                </div>
+                <div class="glass-card text-center reveal">
+                    <div class="text-3xl font-display font-bold mb-2" style="color: var(--text-main);">4</div>
+                    <div class="text-sm font-semibold uppercase tracking-tight" style="color: var(--text-muted);">keynote addresses</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 mb-12">
+                <div class="glass-card text-left reveal" style="background: rgba(255,255,255,0.9);">
+                    <h4 class="font-bold mb-2" style="color: var(--text-main);">1 HirePro report launch</h4>
+                    <p class="text-sm" style="color: var(--text-muted);">on college hiring in India</p>
+                </div>
+                <div class="glass-card text-left reveal" style="background: rgba(255,255,255,0.9);">
+                    <h4 class="font-bold mb-2" style="color: var(--text-main);">1 nationwide hackathon</h4>
+                    <p class="text-sm" style="color: var(--text-muted);">engineering students finale</p>
+                </div>
+                <div class="glass-card reveal" style="background: rgba(255,255,255,0.9);">
+                    <div class="flex justify-between items-center h-100" style="height: 100%;">
+                        <div>
+                            <div class="text-2xl font-bold" style="color: var(--brand-blue);">32K+</div>
+                            <div class="text-xs uppercase font-semibold" style="color: var(--text-muted);">Registrations</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold" style="color: var(--brand-red);">16</div>
+                            <div class="text-xs uppercase font-semibold" style="color: var(--text-muted);">Winners</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md-flex-row justify-center gap-4 reveal">
+                <button class="btn btn-outline">Explore Momentum’24</button>
+                <button class="btn btn-outline">Explore Momentum’25</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal" style="max-width: 800px; margin: 0 auto 64px auto;">
+                <h2 class="font-display text-4xl font-bold mb-6">Who should attend Momentum’26</h2>
+                <p class="text-lg" style="color: var(--text-muted);">Momentum’26 is a curated gathering, by invitation, by conviction, for those who hold the future of India's talent ecosystem in their hands.</p>
+            </div>
+
+            <div class="flex justify-center mb-24 reveal flex-wrap" style="gap: 16px;">
+                <div class="glass-card badge">Chief Human Resources Officers</div>
+                <div class="glass-card badge">Deans of Institutions</div>
+                <div class="glass-card badge">University & College HODs</div>
+                <div class="glass-card badge">Startup Leaders</div>
+                <div class="glass-card badge">College Placement Directors</div>
+                <div class="glass-card badge">Talent Acquisition Heads</div>
+                <div class="glass-card badge">University Relations & HR</div>
+            </div>
+
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl font-bold">What awaits you at Momentum’26</h2>
+            </div>
+            
+            <div class="flex flex-col md-flex-row flex-wrap justify-center items-center gap-6 reveal">
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 0s;">
+                    <span class="font-semibold text-sm">Exclusive<br>Gathering</span>
+                </div>
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 1s;">
+                    <span class="font-semibold text-sm">Future-Defining<br>Conversations</span>
+                </div>
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 2s;">
+                    <span class="font-semibold text-sm">Industry–Academia<br>Exchange</span>
+                </div>
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 0.5s;">
+                    <span class="font-semibold text-sm">Strategic<br>Alliances</span>
+                </div>
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 1.5s;">
+                    <span class="font-semibold text-sm" style="color: var(--brand-blue);">Research &<br>Insights Launch</span>
+                </div>
+                <div class="glass-card animate-float" style="width: 160px; height: 160px; flex-shrink: 0; border-radius: 50%; display:flex; align-items:center; justify-content:center; text-align:center; padding: 16px; animation-delay: 2.5s;">
+                    <span class="font-semibold text-sm" style="color: var(--brand-red);">Tech Hackathon<br>Finale</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="topics" class="dark-section">
+        <div class="container">
+            <h2 class="font-display text-5xl font-bold mb-16 reveal">Panel Discussion Topics</h2>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="glass-card reveal" style="grid-column: span 2;">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-blue); letter-spacing: 2px;">Topic 1</div>
+                    <h3 class="font-display text-2xl font-semibold mb-6">The evolving talent mandate: What industry is hiring for in the age of intelligent automation</h3>
+                    <div class="flex" style="flex-wrap: wrap; gap: 8px;">
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Shift in entry-level expectations</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Hybrid competencies</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">AI fluency</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Day-one readiness</span>
+                    </div>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-red); letter-spacing: 2px;">Topic 2</div>
+                    <h3 class="font-display text-xl font-semibold mb-6">From capability to contribution: Redefining the first-year professional</h3>
+                    <ul class="text-sm" style="color: rgba(255,255,255,0.7); line-height: 2;">
+                        <li>• Elevated expectations</li>
+                        <li>• AI-driven capability shifts</li>
+                        <li>• College-to-industry readiness</li>
+                        <li>• Skills-first hiring</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-yellow); letter-spacing: 2px;">Topic 3</div>
+                    <h3 class="font-display text-xl font-semibold mb-6">Reimagining assessment: Evaluation frameworks for a skills-first generation</h3>
+                    <ul class="text-sm" style="color: rgba(255,255,255,0.7); line-height: 2;">
+                        <li>• Work-sample testing</li>
+                        <li>• Portfolio hiring</li>
+                        <li>• Collaborative problem solving</li>
+                        <li>• AI-driven screening</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card reveal" style="grid-column: span 2;">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-blue); letter-spacing: 2px;">Topic 4</div>
+                    <h3 class="font-display text-2xl font-semibold mb-6">Beyond the test score: How leading organizations reinvent college evaluation</h3>
+                    <div class="flex" style="flex-wrap: wrap; gap: 8px;">
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Hackathons</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Real-world problem solving</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Assessment redesign</span>
+                    </div>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-red); letter-spacing: 2px;">Topic 5</div>
+                    <h3 class="font-display text-xl font-semibold mb-4">Beyond IT: Tech-driven demand across core industries</h3>
+                    <div class="flex" style="flex-wrap: wrap; gap: 8px;">
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">BFSI</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Healthcare</span>
+                        <span class="badge glass" style="border: none; background: rgba(255,255,255,0.1);">Manufacturing</span>
+                    </div>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-yellow); letter-spacing: 2px;">Topic 6</div>
+                    <h3 class="font-display text-xl font-semibold mb-4">The new talent geography: AI redrawing boundaries</h3>
+                    <ul class="text-sm" style="color: rgba(255,255,255,0.7); line-height: 2;">
+                        <li>• AI-linked hiring growth</li>
+                        <li>• Traditional industries transforming</li>
+                        <li>• Beyond CS and IT</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card reveal">
+                    <div class="text-sm font-bold uppercase mb-4" style="color: var(--brand-blue); letter-spacing: 2px;">Topic 7</div>
+                    <h3 class="font-display text-xl font-semibold mb-4">The employer brand reckoning: How top students choose</h3>
+                    <ul class="text-sm" style="color: rgba(255,255,255,0.7); line-height: 2;">
+                        <li>• Employer perception</li>
+                        <li>• Deferred joining impact</li>
+                        <li>• Campus branding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container flex flex-col md-flex-row gap-6">
+            
+            <div class="glass-card report-card reveal" style="padding: 40px; flex: 1;">
+                <div class="badge mb-6" style="background: rgba(52, 195, 232, 0.1); color: var(--brand-blue);">REPORT LAUNCH</div>
+                <h2 class="font-display text-3xl font-bold mb-4">India's most comprehensive read on college hiring</h2>
+                <p class="mb-8" style="color: var(--text-muted);">Momentum'26 marks the release of HirePro's flagship report on the state of college hiring in India, combining sector-wide data, employer intent signals, and insights from top hackathon students.</p>
+                
+                <div class="report-animation-bars">
+                    <div style="width: 30%; height: 16px; background: #e2e8f0; border-radius: 4px;"></div>
+                    <div>
+                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px; margin-bottom: 8px;"></div>
+                        <div style="width: 80%; height: 8px; background: #f1f5f9; border-radius: 4px; margin-bottom: 8px;"></div>
+                        <div style="width: 60%; height: 8px; background: #f1f5f9; border-radius: 4px;"></div>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div style="width: 64px; height: 64px; border-radius: 50%; background: #f1f5f9;"></div>
+                        <div style="width: 100px; height: 24px; border-radius: 12px; background: var(--gradient-primary);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-border-card reveal" style="flex: 1;">
+                <div class="code-bg">
+                    def hackvega_2_0(talent):<br>
+                    &nbsp;&nbsp;if talent.is_innovative():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return AI_Integration(talent)<br>
+                    &nbsp;&nbsp;else:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return "Keep building"<br>
+                    # Searching for tech brilliance...<br>
+                    await evaluate_skills()<br>
+                    sys.exit(0)
+                </div>
+                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%;">
+                    <div class="badge mb-6" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); align-self: flex-start;">COMPETITION</div>
+                    <h2 class="font-display text-4xl font-bold mb-2">HackVega 2.0</h2>
+                    <p class="text-xl mb-6" style="color: var(--brand-blue);">A nationwide hackathon to find the brightest star of tech brilliance</p>
+                    <p class="mb-6" style="flex-grow: 1; color: rgba(255,255,255,0.7);">HackVega 2.0 is not a coding competition. It is a branch-neutral, AI-integrated problem-solving challenge run across India's top engineering colleges.</p>
+                    
+                    <div class="glass" style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 16px; margin-bottom: 32px;">
+                        <span style="display: block; font-size: 0.875rem; color: rgba(255,255,255,0.5); margin-bottom: 4px;">Open to batches:</span>
+                        <span style="font-weight: 700; letter-spacing: 2px;">2026 • 2027 • 2028 • 2029</span>
+                    </div>
+
+                    <button class="btn btn-primary w-full" style="background: transparent; color: #fff; font-weight: 800;">Register for HackVega 2.0</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="agenda">
+        <div class="container" style="max-width: 900px;">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl font-bold mb-4">Agenda</h2>
+                <div class="flex flex-col md-flex-row items-center justify-center gap-4">
+                    <span class="glass badge flex items-center gap-2" style="background: #fff; border: 1px solid #e2e8f0; color: var(--text-muted);"><svg width="16" height="16" fill="none" stroke="var(--brand-blue)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> July xx, 2026</span>
+                    <span class="glass badge flex items-center gap-2" style="background: #fff; border: 1px solid #e2e8f0; color: var(--text-muted);"><svg width="16" height="16" fill="none" stroke="var(--brand-blue)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path></svg> Radisson Blu, Bengaluru</span>
+                </div>
+            </div>
+
+            <div class="timeline-wrapper">
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">09:00 AM</span>
+                        <h4 class="text-lg font-bold">Registration and networking</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">09:45 AM</span>
+                        <h4 class="text-lg font-bold">Welcome address</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">10:05 AM</span>
+                        <h4 class="text-lg font-bold">Keynote address</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">10:25 AM</span>
+                        <h4 class="text-lg font-bold">Panel discussion</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot dot-break"></div>
+                    <div class="timeline-card break">
+                        <span style="color: var(--text-muted); font-weight: 500;">11:15 AM — Tea break and networking</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot dot-red"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time" style="color: var(--brand-red);">11:30 AM</span>
+                        <h4 class="text-lg font-bold">Keynote address</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">11:50 AM</span>
+                        <h4 class="text-lg font-bold">Panel discussion</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot dot-break"></div>
+                    <div class="timeline-card break">
+                        <span style="color: var(--text-muted); font-weight: 500;">12:40 PM — Lunch and networking</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">02:00 PM</span>
+                        <h4 class="text-lg font-bold">Fireside chat</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">02:30 PM</span>
+                        <h4 class="text-lg font-bold">Panel discussion</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot dot-break"></div>
+                    <div class="timeline-card break">
+                        <span style="color: var(--text-muted); font-weight: 500;">03:20 PM — Tea break and networking</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">03:35 PM</span>
+                        <h4 class="text-lg font-bold">Panel discussion</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-time">04:25 PM</span>
+                        <h4 class="text-lg font-bold">Fireside chat</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot dot-yellow"></div>
+                    <div class="timeline-card glass-card finale">
+                        <span class="timeline-time" style="color: var(--brand-yellow);">04:55 PM</span>
+                        <h4 class="text-lg font-bold">HackVega 2.0 finale</h4>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal" style="margin-bottom: 0;">
+                    <div class="timeline-dot dot-dark"></div>
+                    <div class="timeline-card glass-card dark">
+                        <span class="timeline-time" style="color: var(--brand-blue);">05:30 PM</span>
+                        <h4 class="text-lg font-bold">Closing and networking</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="speakers">
+        <div class="container">
+            <div class="flex flex-col md-flex-row justify-between items-center mb-12 reveal">
+                <div>
+                    <h2 class="font-display text-4xl font-bold mb-2">Featured Speakers</h2>
+                    <p style="color: var(--text-muted);">Voices that shape Momentum’26</p>
+                </div>
+                <button style="background: transparent; color: var(--brand-blue); font-weight: 600; font-size: 0.875rem; border-bottom: 1px solid var(--brand-blue); padding-bottom: 2px;">
+                    See our past speakers &rarr;
+                </button>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 reveal mb-16">
+                <div class="glass-card text-center" style="padding: 16px; flex: 1 1 180px; max-width: 250px;">
+                    <div style="background: #e2e8f0; width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; overflow: hidden;">
+                        <img src="https://momentum25.hirepro.in/photos/DrAKBakthavatsalam.png" alt="Speaker" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <h4 class="font-bold text-sm">Dr. A K Bakthavatsalam</h4>
+                </div>
+                <div class="glass-card text-center" style="padding: 16px; flex: 1 1 180px; max-width: 250px;">
+                    <div style="background: #e2e8f0; width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; overflow: hidden;">
+                        <img src="https://momentum25.hirepro.in/photos/AbhishekMehrotra.png" alt="Speaker" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <h4 class="font-bold text-sm">Abhishek Mehrotra</h4>
+                </div>
+                <div class="glass-card text-center" style="padding: 16px; flex: 1 1 180px; max-width: 250px;">
+                    <div style="background: #e2e8f0; width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; overflow: hidden;">
+                        <img src="https://momentum25.hirepro.in/photos/amitverma.png" alt="Speaker" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <h4 class="font-bold text-sm">Amit Verma</h4>
+                </div>
+                <div class="glass-card text-center" style="padding: 16px; flex: 1 1 180px; max-width: 250px;">
+                    <div style="background: #e2e8f0; width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; overflow: hidden;">
+                        <img src="https://momentum25.hirepro.in/photos/anshumandas.png" alt="Speaker" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <h4 class="font-bold text-sm">Anshuman Das</h4>
+                </div>
+                <div class="glass-card text-center" style="padding: 16px; flex: 1 1 180px; max-width: 250px;">
+                    <div style="background: #e2e8f0; width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; overflow: hidden;">
+                        <img src="https://momentum25.hirepro.in/photos/BhuvaneswarNaik.png" alt="Speaker" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <h4 class="font-bold text-sm">Bhuvaneswar Naik</h4>
+                </div>
+            </div>
+
+            <div class="flex flex-col md-flex-row justify-between items-center mb-6 reveal">
+                <h2 class="font-display text-2xl font-bold">Featured partners</h2>
+                <button style="background: transparent; color: var(--brand-blue); font-weight: 600; font-size: 0.75rem;">See our partners from last year &rarr;</button>
+            </div>
+            
+            <div class="marquee-wrapper glass">
+                <div class="marquee-track">
+                    <img src="https://momentum25.hirepro.in/logos/Renesas.png" alt="Renesas">
+                    <img src="https://momentum25.hirepro.in/logos/Indiqube.png" alt="IndiQube">
+                    <img src="https://momentum25.hirepro.in/logos/Careernet.png" alt="Careernet">
+                    <img src="https://momentum25.hirepro.in/logos/mycareeernet.png" alt="MyCareernet">
+                    <img src="https://momentum25.hirepro.in/logos/Renesas.png" alt="Renesas">
+                    <img src="https://momentum25.hirepro.in/logos/Indiqube.png" alt="IndiQube">
+                    <img src="https://momentum25.hirepro.in/logos/Careernet.png" alt="Careernet">
+                    <img src="https://momentum25.hirepro.in/logos/mycareeernet.png" alt="MyCareernet">
+                </div>
+            </div>
+
+            <div class="flex flex-col md-flex-row justify-between items-center mb-6 mt-8 reveal">
+                <h2 class="font-display text-2xl font-bold">Featured participating colleges</h2>
+                <button style="background: transparent; color: var(--brand-blue); font-weight: 600; font-size: 0.75rem;">See colleges that participated last year &rarr;</button>
+            </div>
+
+            <div class="marquee-wrapper glass">
+                <div class="marquee-track reverse">
+                    <img src="https://momentum25.hirepro.in/logos/LNMIIT.png" alt="LNMIIT">
+                    <img src="https://momentum25.hirepro.in/logos/MITADT.png" alt="MIT ADT">
+                    <img src="https://momentum25.hirepro.in/logos/PDEU.png" alt="PDEU">
+                    <img src="https://momentum25.hirepro.in/logos/LNMIIT.png" alt="LNMIIT">
+                    <img src="https://momentum25.hirepro.in/logos/MITADT.png" alt="MIT ADT">
+                    <img src="https://momentum25.hirepro.in/logos/PDEU.png" alt="PDEU">
+                    <img src="https://momentum25.hirepro.in/logos/LNMIIT.png" alt="LNMIIT">
+                    <img src="https://momentum25.hirepro.in/logos/MITADT.png" alt="MIT ADT">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="dark-section" style="overflow: hidden; position: relative;">
+        <div style="position: absolute; top: 0; right: 0; width: 400px; height: 400px; background: var(--brand-blue); filter: blur(120px); opacity: 0.2; pointer-events: none;"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 400px; height: 400px; background: var(--brand-red); filter: blur(120px); opacity: 0.2; pointer-events: none;"></div>
+
+        <div class="container flex flex-col md-flex-row gap-6">
+            
+            <div class="reveal" style="flex: 1;">
+                <h2 class="font-display text-4xl font-bold mb-6">Speak at Momentum’26</h2>
+                <p class="text-lg mb-8" style="color: rgba(255,255,255,0.7); max-width: 500px;">Momentum's stage is for those with the conviction to challenge convention. If you carry a perspective on what learning, employability, and talent must become in the age of AI, we welcome your voice.</p>
+                
+                <div class="glass-card dark" style="display: inline-block;">
+                    <span class="uppercase font-semibold text-sm mb-2 block" style="color: rgba(255,255,255,0.5); letter-spacing: 2px;">Contact</span>
+                    <a href="mailto:jinu.cheeran@hirepro.in" class="font-display text-2xl" style="color: var(--brand-blue);">jinu.cheeran@hirepro.in</a>
+                </div>
+            </div>
+
+            <div class="glass-card dark reveal" style="flex: 1;">
+                <h3 class="font-display text-2xl font-bold mb-8">Register / Become a Partner</h3>
+                
+                <form>
+                    <div class="form-group">
+                        <input type="text" id="name" class="input-field" placeholder=" " required>
+                        <label for="name" class="input-label">Name</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" id="org" class="input-field" placeholder=" " required>
+                        <label for="org" class="input-label">Organization/Institute</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="designation" class="input-field" placeholder=" " required>
+                        <label for="designation" class="input-label">Designation</label>
+                    </div>
+
+                    <div class="flex flex-col md-flex-row gap-4">
+                        <div class="form-group" style="flex: 1;">
+                            <input type="email" id="email" class="input-field" placeholder=" " required>
+                            <label for="email" class="input-label">Email</label>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <input type="tel" id="mobile" class="input-field" placeholder=" " required>
+                            <label for="mobile" class="input-label">Mobile Number</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="city" class="input-field" placeholder=" " required>
+                        <label for="city" class="input-label">City</label>
+                    </div>
+
+                    <button type="button" class="btn-submit">Submit Details</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="https://hirepro.in/wp-content/uploads/2026/02/HirePro_Logo.svg" alt="HirePro Logo" class="footer-logo">
+                    <p class="footer-desc">Momentum’26 convenes at the center of transformation, bringing together visionaries from academia and industry to reimagine learning, redefine employability, and forge new partnerships.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Momentum</a></li>
+                        <li><a href="#topics">Panel Topics</a></li>
+                        <li><a href="#agenda">Agenda</a></li>
+                        <li><a href="#speakers">Speakers</a></li>
+                        <li><a href="#register">Register</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:jinu.cheeran@hirepro.in">jinu.cheeran@hirepro.in</a></li>
+                        <li>Radisson Blu</li>
+                        <li>Bengaluru, Karnataka, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HirePro. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    
+    <script>
+        // Init directly without page load preloader
+        document.addEventListener('DOMContentLoaded', () => {
+            initAnimations();
+            
+            // Header Scroll Effect Logic
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect GSAP ScrollTrigger to Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time)=>{
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor-glow');
+        let cursorX = window.innerWidth / 2;
+        let cursorY = window.innerHeight / 2;
+
+        window.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+        });
+
+        gsap.ticker.add(() => {
+            gsap.to(cursor, {
+                x: cursorX,
+                y: cursorY,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        });
+
+        // Animations Initializer
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Generic scroll reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach((el) => {
+                gsap.fromTo(el, 
+                    { y: 40, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out"
+                    }
+                );
+            });
+
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: "top 90%",
+                    once: true,
+                    onEnter: () => {
+                        const target = +counter.getAttribute('data-target');
+                        gsap.to(counter, {
+                            innerHTML: target,
+                            duration: 2,
+                            ease: "power2.out",
+                            snap: { innerHTML: 1 },
+                            onUpdate: function() {
+                                counter.innerHTML = Math.round(this.targets()[0].innerHTML);
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
