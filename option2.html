@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momentum'26 | Corporate Premium Edition</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           DESIGN SYSTEM: ENTERPRISE CORPORATE
+        ========================================= */
+        :root {
+            /* Core Brand */
+            --brand-blue: #34c3e8;
+            --brand-red: #e21e38;
+            --brand-yellow: #ffc10e;
+            
+            /* Corporate Dark Theme */
+            --bg-base: #0d0d21;
+            --bg-surface: #15152b;
+            --bg-surface-elevated: #1e1e38;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(52, 195, 232, 0.3);
+            
+            /* Typography Scale (Standardized) */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            /* Accents */
+            --gradient-primary: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-red) 68%, var(--brand-yellow) 100%);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* =========================================
+           RESET & BASE
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
+        img, video { max-width: 100%; height: auto; display: block; }
+
+        /* =========================================
+           TYPOGRAPHY
+        ========================================= */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-main);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        /* Standardized Corporate Scale */
+        .text-h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+        .text-h2 { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+        .text-h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        .text-h4 { font-size: 1.25rem; }
+        
+        .text-body-lg { font-size: 1.125rem; color: var(--text-muted); line-height: 1.7; }
+        .text-body { font-size: 1rem; color: var(--text-muted); }
+        .text-small { font-size: 0.875rem; color: var(--text-muted); }
+
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* =========================================
+           LAYOUT & GRID
+        ========================================= */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section { padding: 60px 0; position: relative; }
+
+        .grid { display: grid; gap: 24px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        @media (max-width: 992px) {
+            .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .gap-4 { gap: 16px; }
+        .gap-6 { gap: 24px; }
+
+        /* =========================================
+           COMPONENTS
+        ========================================= */
+        /* Corporate Card */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 32px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Tags / Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: var(--bg-surface-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+        }
+
+        /* Call to Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            position: relative;
+            background: var(--bg-base);
+            color: #fff;
+            z-index: 1;
+        }
+
+        /* Gradient Border Implementation */
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            padding: 2px;
+            background: var(--gradient-primary);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            opacity: 0;
+            z-index: -2;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover::after { opacity: 1; }
+        .btn-primary:hover::before { opacity: 0; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+        }
+        .btn-outline:hover {
+            background: var(--bg-surface-elevated);
+            border-color: var(--text-muted);
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+        .header {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(13, 13, 33, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: padding 0.3s ease;
+        }
+        .header.scrolled { padding: 12px 0; }
+        
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 28px; }
+        
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a:not(.btn) {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+        .nav-links a:not(.btn):hover { color: var(--text-main); }
+
+        /* =========================================
+           HERO
+        ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 0 60px;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15; /* Subtle background */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           ABOUT & PROSE
+        ========================================= */
+        .prose p { margin-bottom: 1.5rem; }
+        .prose ul { margin: 1.5rem 0; padding-left: 0; }
+        .prose li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        .prose li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 10px;
+            width: 8px; height: 8px;
+            background: var(--brand-blue);
+            border-radius: 50%;
+        }
+        
+        .highlight-quote {
+            border-left: 3px solid var(--brand-blue);
+            padding: 24px 32px;
+            background: var(--bg-surface);
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        /* =========================================
+           STATS / LEGACY
+        ========================================= */
+        .stat-card { text-align: center; padding: 40px 24px; }
+        .stat-num {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* =========================================
+           AGENDA (CORPORATE TIMELINE)
+        ========================================= */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 2px;
+            background: var(--border-subtle);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -45px; /* Aligns with the line */
+            top: 32px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px solid var(--brand-blue);
+        }
+
+        .timeline-time {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 4px;
+        }
+
+        .timeline-item.break { background: transparent; border-style: dashed; padding: 16px 24px; }
+        .timeline-item.break .timeline-dot { border-color: var(--text-muted); }
+        .timeline-item.break .text-h4 { color: var(--text-muted); font-size: 1rem; }
+
+        /* =========================================
+           SPEAKERS
+        ========================================= */
+        .speaker-card { text-align: center; padding: 24px; }
+        .speaker-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            object-fit: cover;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-surface-elevated);
+        }
+
+        /* =========================================
+           MARQUEE
+        ========================================= */
+        .marquee {
+            overflow: hidden;
+            padding: 32px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+            align-items: center;
+            gap: 80px;
+        }
+        .marquee-content img {
+            height: 32px;
+            filter: grayscale(100%) opacity(0.5) brightness(200%);
+            transition: all 0.3s ease;
+        }
+        .marquee-content img:hover { filter: grayscale(0%) opacity(1) brightness(100%); }
+        
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* =========================================
+           FORMS & INPUTS
+        ========================================= */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 0.875rem; font-weight: 500; color: var(--text-muted); }
+        .form-control {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus { outline: none; border-color: var(--brand-blue); }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        .footer {
+            background: var(--bg-surface);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .footer-logo { height: 32px; margin-bottom: 24px; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: var(--text-muted); font-size: 0.875rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text-main); }
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* GSAP Utility */
+        .fade-up { opacity: 0; transform: translateY(30px); }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="https://hirepro.in/wp-content/uploads/2026/02/HirePro_Logo.svg" alt="HirePro Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#topics">Topics</a>
+                <a href="#agenda">Agenda</a>
+                <a href="#speakers">Speakers</a>
+                <a href="#register" class="btn btn-primary">Register Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <iframe class="hero-video" 
+            src="https://www.youtube.com/embed/BvgbBRej_II?autoplay=1&mute=1&controls=0&loop=1&playlist=BvgbBRej_II&start=22&playsinline=1&rel=0&showinfo=0&disablekb=1&modestbranding=1" 
+            allow="autoplay; encrypted-media">
+        </iframe>
+        
+        <div class="container hero-content">
+            <h1 class="text-h1 fade-up" style="margin-bottom: 1.5rem;">Beyond Branch. Beyond Degree.<br><span class="text-gradient">Beyond Code.</span></h1>
+            <p class="text-body-lg fade-up" style="margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Momentum’26 convenes at the center of transformation, a one-day symposium with a provocation as its compass for the future of talent.
+            </p>
+            <div class="fade-up">
+                <a href="#register" class="btn btn-primary">Request Invitation</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container grid grid-2 items-center">
+            <div class="fade-up">
+                <span class="badge" style="margin-bottom: 16px;">The Symposium</span>
+                <h2 class="text-h2">The Reckoning<br>Has A Shape.</h2>
+                <p class="text-body-lg">Momentum began as a radical idea. Two years ago, 400+ visionaries from academia and industry convened around a shared conviction, that the long-standing compact between them was ready to be reimagined.</p>
+            </div>
+            
+            <div class="prose fade-up">
+                <div class="highlight-quote">
+                    <h3 class="text-h3">In an age of AI, the boundaries that once defined who could learn what, and who could work where, are dissolving.</h3>
+                </div>
+                <p class="text-body">IT intake stands at a two-decade nadir. Yet AI-linked hiring has surged 41% in BFSI, 38% in Healthcare, 31% in Retail, and 30% in Logistics. The opportunities have not contracted; they have migrated.</p>
+                <p class="text-body text-main" style="font-weight: 600; margin-top: 24px;">What emerges is an invitation:</p>
+                <ul>
+                    <li>Reimagine learning paradigms</li>
+                    <li>Redefine core employability</li>
+                    <li>Forge worthy academia–industry partnerships</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="legacy">
+        <div class="container">
+            <div class="text-center fade-up" style="margin-bottom: 48px;">
+                <h2 class="text-h2">The Legacy of Momentum</h2>
+                <p class="text-body-lg">Highlights from our past editions.</p>
+            </div>
+
+            <div class="grid grid-4 fade-up">
+                <div class="card stat-card">
+                    <div class="stat-num text-gradient">900+</div>
+                    <div class="stat-label">Changemakers</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-num text-gradient">50+</div>
+                    <div class="stat-label">Speakers</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-num" style="color: var(--brand-red);">450+</div>
+                    <div class="stat-label">Corporates</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-num" style="color: var(--brand-yellow);">32K+</div>
+                    <div class="stat-label">Registrations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container text-center fade-up">
+            <h2 class="text-h2">Who Should Attend</h2>
+            <p class="text-body-lg" style="max-width: 700px; margin: 0 auto 32px;">A curated gathering for those who hold the future of India's talent ecosystem.</p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">Chief HR Officers</span>
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">Deans of Institutions</span>
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">University HODs</span>
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">Startup Leaders</span>
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">Placement Directors</span>
+                <span class="card" style="padding: 12px 24px; font-weight: 500;">Talent Acquisition Heads</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="topics">
+        <div class="container">
+            <div class="text-center fade-up" style="margin-bottom: 48px;">
+                <h2 class="text-h2">Panel Discussion Topics</h2>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card fade-up">
+                    <span class="badge" style="color: var(--brand-blue); border-color: var(--brand-blue); margin-bottom: 16px;">Topic 1</span>
+                    <h3 class="text-h4" style="margin-bottom: 16px;">The evolving talent mandate: What industry is hiring for in the age of intelligent automation</h3>
+                    <p class="text-small">Shift in expectations • Hybrid competencies • AI fluency • Day-one readiness</p>
+                </div>
+                
+                <div class="card fade-up">
+                    <span class="badge" style="color: var(--brand-red); border-color: var(--brand-red); margin-bottom: 16px;">Topic 2</span>
+                    <h3 class="text-h4" style="margin-bottom: 16px;">From capability to contribution: Redefining the first-year professional</h3>
+                    <p class="text-small">Elevated expectations • AI-driven capability shifts • Skills-first hiring</p>
+                </div>
+
+                <div class="card fade-up">
+                    <span class="badge" style="color: var(--brand-yellow); border-color: var(--brand-yellow); margin-bottom: 16px;">Topic 3</span>
+                    <h3 class="text-h4" style="margin-bottom: 16px;">Reimagining assessment: Evaluation frameworks for a skills-first generation</h3>
+                    <p class="text-small">Work-sample testing • Portfolio hiring • AI-driven screening</p>
+                </div>
+
+                <div class="card fade-up">
+                    <span class="badge" style="margin-bottom: 16px;">Topic 4</span>
+                    <h3 class="text-h4" style="margin-bottom: 16px;">Beyond the test score: How leading organizations reinvent college evaluation</h3>
+                    <p class="text-small">Hackathons • Real-world problem solving • Assessment redesign</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container grid grid-2 fade-up">
+            <div class="card" style="border-top: 3px solid var(--brand-blue);">
+                <span class="badge" style="margin-bottom: 16px;">Report Launch</span>
+                <h3 class="text-h3">Comprehensive read on college hiring</h3>
+                <p class="text-body" style="margin-bottom: 24px;">Release of HirePro's flagship report on the state of college hiring in India, combining sector-wide data and employer intent signals.</p>
+                <div style="display: flex; align-items: flex-end; gap: 8px; height: 60px;">
+                    <div style="width: 20%; background: var(--border-subtle); height: 40%; border-radius: 4px;"></div>
+                    <div style="width: 20%; background: var(--brand-blue); height: 70%; border-radius: 4px;"></div>
+                    <div style="width: 20%; background: var(--border-subtle); height: 50%; border-radius: 4px;"></div>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 3px solid var(--brand-red);">
+                <span class="badge" style="color: var(--brand-red); border-color: var(--brand-red); margin-bottom: 16px;">Competition</span>
+                <h3 class="text-h3">HackVega 2.0 Finale</h3>
+                <p class="text-body" style="margin-bottom: 24px;">A nationwide hackathon to find the brightest star of tech brilliance. A branch-neutral, AI-integrated problem-solving challenge.</p>
+                <a href="#register" class="btn btn-outline" style="width: 100%;">Register for HackVega 2.0</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="agenda">
+        <div class="container">
+            <div class="text-center fade-up" style="margin-bottom: 48px;">
+                <h2 class="text-h2">Agenda</h2>
+                <p class="text-body">July xx, 2026 • Radisson Blu, Bengaluru</p>
+            </div>
+
+            <div class="timeline fade-up">
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">09:00 AM</span>
+                    <h4 class="text-h4">Registration and networking</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">09:45 AM</span>
+                    <h4 class="text-h4">Welcome address</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">10:05 AM</span>
+                    <h4 class="text-h4">Keynote address</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">10:25 AM</span>
+                    <h4 class="text-h4">Panel discussion</h4>
+                </div>
+
+                <div class="timeline-item break">
+                    <div class="timeline-dot"></div>
+                    <h4 class="text-h4">11:15 AM — Tea break and networking</h4>
+                </div>
+
+                <div class="timeline-item" style="border-color: var(--brand-red);">
+                    <div class="timeline-dot" style="border-color: var(--brand-red);"></div>
+                    <span class="timeline-time" style="color: var(--brand-red);">11:30 AM</span>
+                    <h4 class="text-h4">Keynote address</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">11:50 AM</span>
+                    <h4 class="text-h4">Panel discussion</h4>
+                </div>
+
+                <div class="timeline-item break">
+                    <div class="timeline-dot"></div>
+                    <h4 class="text-h4">12:40 PM — Lunch and networking</h4>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">02:00 PM</span>
+                    <h4 class="text-h4">Fireside chat</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">02:30 PM</span>
+                    <h4 class="text-h4">Panel discussion</h4>
+                </div>
+
+                <div class="timeline-item break">
+                    <div class="timeline-dot"></div>
+                    <h4 class="text-h4">03:20 PM — Tea break and networking</h4>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">04:25 PM</span>
+                    <h4 class="text-h4">Fireside chat</h4>
+                </div>
+
+                <div class="timeline-item" style="border-color: var(--brand-yellow);">
+                    <div class="timeline-dot" style="border-color: var(--brand-yellow);"></div>
+                    <span class="timeline-time" style="color: var(--brand-yellow);">04:55 PM</span>
+                    <h4 class="text-h4">HackVega 2.0 finale</h4>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-time">05:30 PM</span>
+                    <h4 class="text-h4">Closing and networking</h4>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="speakers">
+        <div class="container">
+            <div class="flex items-center justify-between fade-up" style="margin-bottom: 48px;">
+                <h2 class="text-h2" style="margin: 0;">Featured Speakers</h2>
+                <a href="#" class="text-body text-main">See past speakers &rarr;</a>
+            </div>
+
+            <div class="grid grid-4 fade-up">
+                <div class="card speaker-card">
+                    <img src="https://momentum25.hirepro.in/photos/DrAKBakthavatsalam.png" alt="Speaker" class="speaker-img">
+                    <h4 class="text-h4" style="font-size: 1rem;">Dr. A K Bakthavatsalam</h4>
+                </div>
+                <div class="card speaker-card">
+                    <img src="https://momentum25.hirepro.in/photos/AbhishekMehrotra.png" alt="Speaker" class="speaker-img">
+                    <h4 class="text-h4" style="font-size: 1rem;">Abhishek Mehrotra</h4>
+                </div>
+                <div class="card speaker-card">
+                    <img src="https://momentum25.hirepro.in/photos/amitverma.png" alt="Speaker" class="speaker-img">
+                    <h4 class="text-h4" style="font-size: 1rem;">Amit Verma</h4>
+                </div>
+                <div class="card speaker-card">
+                    <img src="https://momentum25.hirepro.in/photos/anshumandas.png" alt="Speaker" class="speaker-img">
+                    <h4 class="text-h4" style="font-size: 1rem;">Anshuman Das</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 0;">
+        <div class="marquee fade-up">
+            <div class="marquee-content">
+                <img src="https://momentum25.hirepro.in/logos/Renesas.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/Indiqube.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/Careernet.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/mycareeernet.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/LNMIIT.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/MITADT.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/Renesas.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/Indiqube.png" alt="Partner">
+                <img src="https://momentum25.hirepro.in/logos/Careernet.png" alt="Partner">
+            </div>
+        </div>
+    </section>
+
+    <section id="register">
+        <div class="container grid grid-2 fade-up">
+            <div>
+                <h2 class="text-h2">Speak at Momentum’26</h2>
+                <p class="text-body-lg" style="margin-bottom: 32px;">Momentum's stage is for those with the conviction to challenge convention. If you carry a perspective on what learning and talent must become in the age of AI, we welcome your voice.</p>
+                <div class="card" style="display: inline-block;">
+                    <span class="text-small block" style="margin-bottom: 8px;">Contact</span>
+                    <a href="mailto:jinu.cheeran@hirepro.in" class="text-h4 text-gradient">jinu.cheeran@hirepro.in</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-h3" style="margin-bottom: 24px;">Register / Partner</h3>
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Organization</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Submit Details</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid grid-4">
+                <div style="grid-column: span 2;">
+                    <img src="https://hirepro.in/wp-content/uploads/2026/02/HirePro_Logo.svg" alt="HirePro Logo" class="footer-logo">
+                    <p class="text-body" style="max-width: 400px;">Convenes at the center of transformation, bringing together visionaries to reimagine learning and redefine employability.</p>
+                </div>
+                <div>
+                    <h4 class="text-h4" style="margin-bottom: 16px;">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#topics">Panel Topics</a></li>
+                        <li><a href="#agenda">Agenda</a></li>
+                        <li><a href="#speakers">Speakers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-h4" style="margin-bottom: 16px;">Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:jinu.cheeran@hirepro.in">jinu.cheeran@hirepro.in</a></li>
+                        <li>Radisson Blu</li>
+                        <li>Bengaluru, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom text-small">
+                <p>&copy; 2026 HirePro. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Header Scroll Logic
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            });
+
+            // Smooth Scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.utils.toArray('.fade-up').forEach((el) => {
+                gsap.to(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
